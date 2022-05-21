@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Text Editor";
+}
+
+
+<div class="main">
+    <form class="container" method="post" enctype="multipart/form-data" asp-controller="Home">
+        <textarea id="large-area--input" class="large-area large-area--input" name="text">@ViewBag.input</textarea>
+
+        <div class="controls">
+            <input class="name-of-api" type="file" name="loadedfile" onchange="readFromFile(this.files[0])">
+
+            <button type="submit" value="parse" name="state" class="controls__button controls__button--format">parse</button>
+            <button type="submit" value="scan" name="state" class="controls__button controls__button--scan">scan</button>
+        </div>
+        <textarea readonly class="large-area large-area--output">@ViewBag.output</textarea>
+
+    </form>
+
+</div>
+<script>
+    
+    let inputArea = document.querySelector(".large-area--input");
+    const outputArea = document.querySelector(".large-area--output");
+    const btnFormat = document.querySelector(".controls__button--format");
+    const SCAN = document.querySelector(".controls__button--scan");
+    const nameofapi = document.querySelector(".name-of-api");
+    const FORM = document.querySelector("form");
+    let saveJSONPermession = false;
+    let text_content = "";
+
+    
+    async function readFromFile(file) {
+        let text = await file.text();
+        console.log(text);
+        inputArea.value = text;
+        console.log(SCAN);
+        READ.click();
+        text = "";
+    };
+
+</script>
+<script src="~/js/site.js"></script>
