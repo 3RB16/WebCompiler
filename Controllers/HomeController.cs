@@ -1,4 +1,4 @@
-﻿using WebCompiler.Models;
+using WebCompiler.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -33,7 +33,29 @@ namespace WebCompiler.Controllers
             if (state == "parse")
             {
                 //parse code.
-                ViewBag.output = text_content;
+                List<string> input = new List<string>();
+                string inputText = "";
+                text_content += "\n";
+                for (int i = 0; i < text_content.Length; i++)
+                {
+                    if (text_content[i] != '\n')
+                    {
+                        inputText += text_content[i];
+                    }
+                    else
+                    {
+                        input.Add(inputText);
+                        inputText = "";
+                    }
+                }
+
+                List<string> ret = ScannerModel.run(input, true);
+                string finalOutput = "";
+                for (int i = 0; i < ret.Count; i++)
+                {
+                    finalOutput += ret[i];
+                }
+                ViewBag.output = finalOutput;
                 ViewBag.input = "";
                 return View("Index");
             }
@@ -56,7 +78,7 @@ namespace WebCompiler.Controllers
                     }
                 }
 
-                List<string> ret = ScannerModel.run(input);
+                List<string> ret = ScannerModel.run(input , false);
                 string finalOutput = "";
                 for (int i = 0; i < ret.Count; i++){
                     finalOutput += ret[i];
