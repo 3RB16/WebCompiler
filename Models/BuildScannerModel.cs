@@ -1,4 +1,4 @@
-﻿using WebCompiler.Models;
+using WebCompiler.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -150,6 +150,8 @@ namespace WebCompiler.Models
                 }
             }
         }
+     
+
         private void AddCorrectToken(int numberOfLine, string TokenText, string TokenType , ref List <string> answer) {
             answer.Add("Line : " + numberOfLine + " Token Text:" + TokenText
              + "    " + "Token Type:" + TokenType + "\n");
@@ -157,10 +159,26 @@ namespace WebCompiler.Models
         private void AddErrorToken(int numberOfLine, string TokenText , ref List<string> answer) {
             answer.Add("Line : " + numberOfLine + " Error in Token Text:" + TokenText + "\n");
         }
-        
+         
         public BuildScannerModel() {
             buildTokens();
             buildTree();
+        }
+        public string getRole(string line) { // parser handelling
+            var filterdLine = filterData(line);
+            foreach (var current in filterdLine)
+            {
+                if (current == "Program") return "Program";
+                else if (current == "Category") return " ClassDeclaration";
+                else if (current == "W") return "MethodDeclaration";
+                else if (current == "Ilap" || current == "Silap" || current == "Clop" || current == "Series" ||
+                 current == "Ilapf" || current == "Silapf" || current == "Logical")
+                    return "Type";
+                else if (current == "If" || current == "Else") return "If _Statement";
+                else if (current == "Continuewhen") return "Continuewhen";
+                else if (current == "{" || current == "}") return "Block Statements";
+            }
+            return "Statement";
         }
     }
 }
