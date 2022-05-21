@@ -1,0 +1,10 @@
+Program 
+    Category x {
+        W decrease ( ) {
+            int reg3 = 5 ;
+            Continuewhen ( counter < num ) {
+                reg3 = reg3 - 1 ; 
+            } 
+        } 
+    }
+End
